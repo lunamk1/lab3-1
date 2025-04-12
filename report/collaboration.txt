@@ -1,0 +1,13 @@
+We have all agreed on these attributions:
+
+Luna Kim worked on:
+- Modelling for BoW and word2vec
+
+Zhaoyi Zhang worked on:
+- Modelling for GloVe and Stability Analysis
+
+Connor Pestell worked on:
+- Embeddings for BoW and GloVe
+
+Kathy Li worked on:
+- Embeddings for word2vec and EDA
