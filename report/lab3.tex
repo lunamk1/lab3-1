@@ -246,13 +246,22 @@ Top 5\% CC & 0.0302 \\
 \subsection{The Best Embedding Model}
 \vspace{0.5em} % space after
 
-In this section, we compare the performance of three different text embeddings—Bag-of-Words (BoW), Word2Vec, and GloVe—in predicting brain activity from podcast text. The models were evaluated based on four key metrics: Mean CC, Median CC, Top 1\% CC, and Top 5\% CC.
+To evaluate the effectiveness of different word embedding models, we focused on the correlation coefficient (CC) between predicted and actual voxel activity. Among all evaluated models, GloVe demonstrated the most promising results. After tuning the model parameters, a clear performance improvement was observed.
 
-The results of our comparison show that GloVe outperforms both BoW and Word2Vec in all metrics, with the highest Mean CC of 0.0049 before adjusting the regularization parameter, and 0.0083 after tuning the alpha parameter. This indicates that GloVe provides more accurate predictions of voxel-wise brain activity correlations. Specifically, the Mean CC for BoW was 0.0021, and for Word2Vec, it was 0.0039, both lower than GloVe. Additionally, GloVe achieved the highest Median CC of 0.0044 before optimization, which improved to 0.0068 after adjusting alpha.
+As shown in Figure 4, we compared the distribution of CC values across 5000 voxels before and after parameter tuning for GloVe. The distribution became slightly wider and shifted to the right, indicating an increase in voxel-wise prediction accuracy.
 
-One of the most notable improvements after adjusting alpha was observed in the Top 1\% CC, where GloVe increased from 0.0441 to 0.0622. This shift indicates that the model now better captures the strongest correlations between podcast text and brain activity. Similarly, for the Top 5\% CC, GloVe improved from 0.0302 to 0.0392, suggesting a more robust model that is better able to predict the top-performing voxels in the brain.
+Quantitatively, the mean CC improved from 0.0049 (before tuning) to 0.0083 (after tuning), while the median CC increased from 0.0044 to 0.0068. Notably, performance gains were more pronounced in higher-performing voxels: the top 1\% CC increased from 0.0441 to 0.0622, and the top 5\% CC rose from 0.0302 to 0.0392. These results suggest that careful parameter tuning can substantially enhance the encoding power of embedding models like GloVe in predicting brain activity.
 
-The distributions of the voxel-wise correlation coefficients further highlight these improvements. As shown in the accompanying histograms, the Before tuning distribution had a more concentrated peak around a Mean CC of 0.0049 and Median CC of 0.0044 (Figure 1). However, after tuning the alpha parameter, the After tuning distribution shifted, showing a wider range with a higher peak around the new Mean CC of 0.0083 and Median CC of 0.0068 (Figure 2). This suggests that, with the optimized alpha, the model's performance across the voxels became more consistent, with a noticeable increase in the number of voxels exhibiting higher correlation coefficients.
+Although the overall distribution indicates improvement, the relatively low mean and median CC values suggest that the model does not perform equally well across all voxels. Instead, only a subset of voxels shows substantial correlations, which is consistent with prior literature emphasizing localized regions involved in language processing. Scientifically, this highlights the sparse and selective nature of semantic representations in the brain, where only certain voxels—likely located in language-related areas—are strongly modulated by semantic content derived from the podcast stimuli.
+
+From a Predictability, Computability, Stability (PCS) perspective, a reasonable interpretation criterion is to focus on voxels within the top percentile range (e.g., top 1\% or 5\% CC values), where signal strength is stable and consistently above chance. These voxels are not only statistically significant but also stable across parameter tuning and computational procedures. Hence, they provide the most robust and interpretable substrate for understanding the neural encoding of language.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figs/cc-dist-Glove-After.png}
+    \caption{GloVe Correlation Coefficient Distribution (After)}
+    \label{fig:prob_hist_glove}
+\end{figure}
 
 \begin{table}[ht]
 \centering
@@ -287,7 +296,7 @@ In conclusion, the model is generally stable across most test stories, but there
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.9\textwidth]{figs/cc_violin_plot_stability.png}
+    \includegraphics[width=0.9\textwidth]{figs/cc-stabilitycheck.png}
     \caption{GloVe Correlation Coefficient Distribution}
     \label{fig:violin_glove}
 \end{figure}
